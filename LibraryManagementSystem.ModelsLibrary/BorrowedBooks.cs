@@ -1,6 +1,6 @@
 ﻿namespace LibraryManagementSystem.ModelsLibrary
 {
-    public class BorrowedBooks
+    public class BorrowedBooks : BaseDeletableEntity
     {
         public int Id { get; set; }
         public DateTime BorrowDate { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace LibraryManagementSystem.ModelsLibrary
 {
-    public class Member
+    public class Member : BaseDeletableEntity
     {
         public Member()
         {

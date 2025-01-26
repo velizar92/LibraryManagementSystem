@@ -1,6 +1,6 @@
 ﻿namespace LibraryManagementSystem.ModelsLibrary
 {
-    public class Book
+    public class Book : BaseDeletableEntity
     {
         public Book()
         {

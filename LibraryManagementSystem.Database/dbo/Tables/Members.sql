@@ -5,4 +5,6 @@
 	[LastName] NVARCHAR(100),
 	[Email] VARCHAR(70) NOT NULL UNIQUE,
 	[PhoneNumber] VARCHAR(20),
+	[IsDeleted] BIT,
+	[DeletedOn] DATETIME,
 )

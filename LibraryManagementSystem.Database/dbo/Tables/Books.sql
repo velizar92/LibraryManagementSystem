@@ -5,4 +5,6 @@
 	[Author] NVARCHAR(100) NOT NULL,
 	[Genre] NVARCHAR(50),
 	[PublishedYear] CHAR(4),
+	[IsDeleted] BIT,
+	[DeletedOn] DATETIME,
 )
