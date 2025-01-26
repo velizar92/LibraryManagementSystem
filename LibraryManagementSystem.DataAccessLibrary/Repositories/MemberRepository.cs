@@ -134,22 +134,149 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
 
         public Member GetMemberFullInfoById(int memberId)
         {
-            throw new NotImplementedException();
+            Member member = null;
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                using (var command = new SqlCommand("SELECT m.Id, m.FirstName, m.LastName, m.Email, m.PhoneNumber, " +
+                                                    "bb.BorrowDate, bb.ReturnDate, b.Title, b.Author, b.Genre, b.PublishedYear " +
+                                                    "FROM Members AS m " +
+                                                    "JOIN BorrowedBooks AS bb ON bb.MemberId = m.Id " +
+                                                    "JOIN Books AS b ON bb.BookId = b.Id " +
+                                                    "WHERE m.Id = @MemberId AND m.IsDeleted = 0", connection))
+                {
+                    command.Parameters.AddWithValue("@MemberId", memberId);
+
+                    connection.Open();
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            if (member == null)
+                            {
+                                member = new Member
+                                {
+                                    Id = (int)reader["Id"],
+                                    FirstName = reader["FirstName"] != DBNull.Value ? reader["FirstName"].ToString() : null,
+                                    LastName = reader["LastName"] != DBNull.Value ? reader["LastName"].ToString() : null,
+                                    Email = reader["Email"] != DBNull.Value ? reader["Email"].ToString() : null,
+                                    PhoneNumber = reader["PhoneNumber"] != DBNull.Value ? reader["PhoneNumber"].ToString() : null,
+                                    BorrowedBooks = new List<BorrowedBooks>()
+                                };
+                            }
+
+                            member.BorrowedBooks.Add(new BorrowedBooks
+                            {
+                                BorrowDate = reader["BorrowDate"] != DBNull.Value ? (DateTime?)reader["BorrowDate"] : null,
+                                ReturnDate = reader["ReturnDate"] != DBNull.Value ? (DateTime?)reader["ReturnDate"] : null,
+                                Book = new Book
+                                {
+                                    Title = reader["Title"] != DBNull.Value ? reader["Title"].ToString() : null,
+                                    Author = reader["Author"] != DBNull.Value ? reader["Author"].ToString() : null,
+                                    Genre = reader["Genre"] != DBNull.Value ? reader["Genre"].ToString() : null,
+                                    PublishedYear = reader["PublishedYear"] != DBNull.Value ? reader["PublishedYear"].ToString() : null,
+                                }
+                            });
+
+                        }
+                    }
+                }
+            }
+
+            return member;
         }
 
         public IEnumerable<Member> GetMembersByFirstName(string memberFirstName)
         {
-            throw new NotImplementedException();
+            List<Member> members = new List<Member>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                using (var command = new SqlCommand("SELECT * FROM Members " +
+                                                    "WHERE FirstName = @FirstName", connection))
+                {
+
+                    command.Parameters.AddWithValue("@FirstName", memberFirstName);
+
+                    connection.Open();
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var member = new Member
+                            {
+                                Id = (int)reader["Id"],
+                                FirstName = reader["FirstName"] != DBNull.Value ? reader["FirstName"].ToString() : null,
+                                LastName = reader["LastName"] != DBNull.Value ? reader["LastName"].ToString() : null,
+                                Email = reader["Email"] != DBNull.Value ? reader["Email"].ToString() : null,
+                                PhoneNumber = reader["PhoneNumber"] != DBNull.Value ? reader["PhoneNumber"].ToString() : null,
+                            };
+
+                            members.Add(member);
+                        }
+                    }
+                }
+            }
+
+            return members;
         }
 
         public IEnumerable<Member> GetMembersByLastName(string memberLastName)
         {
-            throw new NotImplementedException();
+            List<Member> members = new List<Member>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                using (var command = new SqlCommand("SELECT * FROM Members " +
+                                                    "WHERE LastName = @LastName", connection))
+                {
+
+                    command.Parameters.AddWithValue("@LastName", memberLastName);
+
+                    connection.Open();
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var member = new Member
+                            {
+                                Id = (int)reader["Id"],
+                                FirstName = reader["FirstName"] != DBNull.Value ? reader["FirstName"].ToString() : null,
+                                LastName = reader["LastName"] != DBNull.Value ? reader["LastName"].ToString() : null,
+                                Email = reader["Email"] != DBNull.Value ? reader["Email"].ToString() : null,
+                                PhoneNumber = reader["PhoneNumber"] != DBNull.Value ? reader["PhoneNumber"].ToString() : null,
+                            };
+
+                            members.Add(member);
+                        }
+                    }
+                }
+            }
+
+            return members;
         }
 
         public void UpdateMember(Member member)
         {
-            throw new NotImplementedException();
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                using (var command = new SqlCommand("UPDATE Members " +
+                                                    "SET FirstName = @FirstName, LastName = @LastName, Email = @Email, PhoneNumber = @PhoneNumber " +
+                                                    "WHERE Id = @MemberId", connection))
+                {
+                    command.Parameters.AddWithValue("@MemberId", member.Id);
+                    command.Parameters.AddWithValue("@FirstName", member.FirstName);
+                    command.Parameters.AddWithValue("@LastName", member.LastName);
+                    command.Parameters.AddWithValue("@Email", member.Email);
+                    command.Parameters.AddWithValue("@PhoneNumber", member.PhoneNumber);
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
         }
 
         public void DeleteMemberById(int memberId)
