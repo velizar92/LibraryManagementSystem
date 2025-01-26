@@ -16,7 +16,7 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
         {
             using (var connection = new SqlConnection(_connectionString))
             {
-                using (var command = new SqlCommand("INSERT INTO Books(Title, Author, Genre, PublishedYear, IsDeleted)" +
+                using (var command = new SqlCommand("INSERT INTO Books(Title, Author, Genre, PublishedYear, IsDeleted) " +
                                                     "VALUES(@Title, @Author, @Genre, @PublishedYear, @IsDeleted)", connection))
                 {
                     command.Parameters.AddWithValue("@Title", book.Title);
@@ -290,6 +290,77 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                     command.ExecuteNonQuery();
                 }
             }
+        }
+
+        public IEnumerable<Book> GetBorrowedBooksByMemberId(int memberId)
+        {
+            List<Book> books = new List<Book>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                using (var command = new SqlCommand("SELECT * FROM Books AS b " +
+                                                    "JOIN BorrowedBooks AS bb ON bb.BookId = b.Id " +
+                                                    "JOIN Members AS m ON bb.MemberId = m.Id " +
+                                                    "WHERE IsDeleted = 0 AND bb.BorrowedDate IS NOT NULL AND m.Id = @MemberId", connection))
+                {
+                    command.Parameters.AddWithValue("@MemberId", memberId);
+
+                    connection.Open();
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Book book = new Book
+                            {
+                                Id = (int)reader["Id"],
+                                Title = reader["Title"] != DBNull.Value ? reader["Title"].ToString() : null,
+                                Author = reader["Author"] != DBNull.Value ? reader["Author"].ToString() : null,
+                                Genre = reader["Genre"] != DBNull.Value ? reader["Genre"].ToString() : null,
+                                PublishedYear = reader["PublishedYear"] != DBNull.Value ? reader["PublishedYear"].ToString() : null,
+                            };
+
+                            books.Add(book);
+                        }
+                    }
+                }
+            }
+
+            return books;
+        }
+
+        public IEnumerable<Book> GetAllBorrowedBooks()
+        {
+            List<Book> books = new List<Book>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                using (var command = new SqlCommand("SELECT * FROM Books AS b " +
+                                                    "JOIN BorrowedBooks AS bb ON bb.BookId = b.Id " +
+                                                    "WHERE IsDeleted = 0 AND bb.BorrowedDate IS NOT NULL", connection))
+                {
+                    connection.Open();
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Book book = new Book
+                            {
+                                Id = (int)reader["Id"],
+                                Title = reader["Title"] != DBNull.Value ? reader["Title"].ToString() : null,
+                                Author = reader["Author"] != DBNull.Value ? reader["Author"].ToString() : null,
+                                Genre = reader["Genre"] != DBNull.Value ? reader["Genre"].ToString() : null,
+                                PublishedYear = reader["PublishedYear"] != DBNull.Value ? reader["PublishedYear"].ToString() : null,
+                            };
+
+                            books.Add(book);
+                        }
+                    }
+                }
+            }
+
+            return books;
         }
     }
 }
