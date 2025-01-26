@@ -1,6 +1,5 @@
 ﻿using LibraryManagementSystem.ModelsLibrary;
 using Microsoft.Data.SqlClient;
-using System.Net;
 
 namespace LibraryManagementSystem.DataAccessLibrary.Repositories
 {
@@ -292,6 +291,5 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                 }
             }
         }
-
     }
 }
