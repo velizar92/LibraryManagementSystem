@@ -34,7 +34,7 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
             using (var connection = new SqlConnection(_connectionString))
             {
                 using (var command = new SqlCommand("UPDATE BorrowedBooks " +
-                                                    "SET ReturnDate = @ReturnDate " +
+                                                    "SET ReturnDate = @ReturnDate, BorrowedDate = NULL " +
                                                     "WHERE Id = @BorrowId", connection))
                 {
                     command.Parameters.AddWithValue("@BorrowId", borrowId);
