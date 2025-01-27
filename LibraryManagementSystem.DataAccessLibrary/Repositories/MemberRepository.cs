@@ -31,6 +31,7 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
             }
         }
 
+        
         public IEnumerable<Member> GetAllMembers()
         {
             List<Member> members = new List<Member>();
@@ -46,14 +47,7 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                     {
                         while (reader.Read())
                         {
-                            var member = new Member
-                            {
-                                Id = (int)reader["Id"],
-                                FirstName = reader["FirstName"] != DBNull.Value ? reader["FirstName"].ToString() : null,
-                                LastName = reader["LastName"] != DBNull.Value ? reader["LastName"].ToString() : null,
-                                Email = reader["Email"] != DBNull.Value ? reader["Email"].ToString() : null,
-                                PhoneNumber = reader["PhoneNumber"] != DBNull.Value ? reader["PhoneNumber"].ToString() : null,
-                            };
+                            var member = GetMemberData(reader);
 
                             members.Add(member);
                         }
@@ -81,15 +75,7 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                     {
                         while (reader.Read())
                         {
-                            member = new Member
-                            {
-                                Id = (int)reader["Id"],
-                                FirstName = reader["FirstName"] != DBNull.Value ? reader["FirstName"].ToString() : null,
-                                LastName = reader["LastName"] != DBNull.Value ? reader["LastName"].ToString() : null,
-                                Email = reader["Email"] != DBNull.Value ? reader["Email"].ToString() : null,
-                                PhoneNumber = reader["PhoneNumber"] != DBNull.Value ? reader["PhoneNumber"].ToString() : null,
-                            };
-
+                            member = GetMemberData(reader);
                         }
                     }
                 }
@@ -115,15 +101,7 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                     {
                         while (reader.Read())
                         {
-                            member = new Member
-                            {
-                                Id = (int)reader["Id"],
-                                FirstName = reader["FirstName"] != DBNull.Value ? reader["FirstName"].ToString() : null,
-                                LastName = reader["LastName"] != DBNull.Value ? reader["LastName"].ToString() : null,
-                                Email = reader["Email"] != DBNull.Value ? reader["Email"].ToString() : null,
-                                PhoneNumber = reader["PhoneNumber"] != DBNull.Value ? reader["PhoneNumber"].ToString() : null,
-                            };
-
+                            member = GetMemberData(reader);
                         }
                     }
                 }
@@ -155,15 +133,8 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                         {
                             if (member == null)
                             {
-                                member = new Member
-                                {
-                                    Id = (int)reader["Id"],
-                                    FirstName = reader["FirstName"] != DBNull.Value ? reader["FirstName"].ToString() : null,
-                                    LastName = reader["LastName"] != DBNull.Value ? reader["LastName"].ToString() : null,
-                                    Email = reader["Email"] != DBNull.Value ? reader["Email"].ToString() : null,
-                                    PhoneNumber = reader["PhoneNumber"] != DBNull.Value ? reader["PhoneNumber"].ToString() : null,
-                                    BorrowedBooks = new List<BorrowedBooks>()
-                                };
+                                member = GetMemberData(reader);
+                                member.BorrowedBooks = new List<BorrowedBooks>();
                             }
 
                             member.BorrowedBooks.Add(new BorrowedBooks
@@ -205,15 +176,8 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                     {
                         while (reader.Read())
                         {
-                            var member = new Member
-                            {
-                                Id = (int)reader["Id"],
-                                FirstName = reader["FirstName"] != DBNull.Value ? reader["FirstName"].ToString() : null,
-                                LastName = reader["LastName"] != DBNull.Value ? reader["LastName"].ToString() : null,
-                                Email = reader["Email"] != DBNull.Value ? reader["Email"].ToString() : null,
-                                PhoneNumber = reader["PhoneNumber"] != DBNull.Value ? reader["PhoneNumber"].ToString() : null,
-                            };
-
+                            var member = GetMemberData(reader);
+                            
                             members.Add(member);
                         }
                     }
@@ -241,14 +205,7 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                     {
                         while (reader.Read())
                         {
-                            var member = new Member
-                            {
-                                Id = (int)reader["Id"],
-                                FirstName = reader["FirstName"] != DBNull.Value ? reader["FirstName"].ToString() : null,
-                                LastName = reader["LastName"] != DBNull.Value ? reader["LastName"].ToString() : null,
-                                Email = reader["Email"] != DBNull.Value ? reader["Email"].ToString() : null,
-                                PhoneNumber = reader["PhoneNumber"] != DBNull.Value ? reader["PhoneNumber"].ToString() : null,
-                            };
+                            var member = GetMemberData(reader);
 
                             members.Add(member);
                         }
@@ -294,6 +251,18 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                     command.ExecuteNonQuery();
                 }
             }
+        }
+
+        private Member GetMemberData(SqlDataReader reader)
+        {
+            return new Member
+            {
+                Id = (int)reader["Id"],
+                FirstName = reader["FirstName"] != DBNull.Value ? reader["FirstName"].ToString() : null,
+                LastName = reader["LastName"] != DBNull.Value ? reader["LastName"].ToString() : null,
+                Email = reader["Email"] != DBNull.Value ? reader["Email"].ToString() : null,
+                PhoneNumber = reader["PhoneNumber"] != DBNull.Value ? reader["PhoneNumber"].ToString() : null,
+            };
         }
     }
 }
