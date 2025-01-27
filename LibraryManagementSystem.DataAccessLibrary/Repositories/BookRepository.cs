@@ -32,6 +32,8 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
             }
         }
 
+      
+
         public IEnumerable<Book> GetAllBooks()
         {
             List<Book> books = new List<Book>();
@@ -47,18 +49,11 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                     {
                         while (reader.Read())
                         {
-                            Book book = new Book
-                            {
-                                Id = (int)reader["Id"],
-                                Title = reader["Title"] != DBNull.Value ? reader["Title"].ToString() : null,
-                                Author = reader["Author"] != DBNull.Value ? reader["Author"].ToString() : null,
-                                Genre = reader["Genre"] != DBNull.Value ? reader["Genre"].ToString() : null,
-                                PublishedYear = reader["PublishedYear"] != DBNull.Value ? reader["PublishedYear"].ToString() : null,
-                            };
+                            Book book = GetBookData(reader);
 
                             books.Add(book);
                         }
-                    }              
+                    }
                 }
             }
 
@@ -82,14 +77,7 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                     {
                         while (reader.Read())
                         {
-                            book = new Book
-                            {
-                                Id = (int)reader["Id"],
-                                Title = reader["Title"] != DBNull.Value ? reader["Title"].ToString() : null,
-                                Author = reader["Author"] != DBNull.Value ? reader["Author"].ToString() : null,
-                                Genre = reader["Genre"] != DBNull.Value ? reader["Genre"].ToString() : null,
-                                PublishedYear = reader["PublishedYear"] != DBNull.Value ? reader["PublishedYear"].ToString() : null,
-                            };                  
+                            book = GetBookData(reader);
                         }
                     }
                 }
@@ -115,14 +103,7 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                     {
                         while (reader.Read())
                         {
-                            book = new Book
-                            {
-                                Id = (int)reader["Id"],
-                                Title = reader["Title"] != DBNull.Value ? reader["Title"].ToString() : null,
-                                Author = reader["Author"] != DBNull.Value ? reader["Author"].ToString() : null,
-                                Genre = reader["Genre"] != DBNull.Value ? reader["Genre"].ToString() : null,
-                                PublishedYear = reader["PublishedYear"] != DBNull.Value ? reader["PublishedYear"].ToString() : null,
-                            };
+                            book = GetBookData(reader);
                         }
                     }
                 }
@@ -154,15 +135,8 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                         {
                             if (book == null)
                             {
-                                book = new Book
-                                {
-                                    Id = (int)reader["Id"],
-                                    Title = reader["Title"] != DBNull.Value ? reader["Title"].ToString() : null,
-                                    Author = reader["Author"] != DBNull.Value ? reader["Author"].ToString() : null,
-                                    Genre = reader["Genre"] != DBNull.Value ? reader["Genre"].ToString() : null,
-                                    PublishedYear = reader["PublishedYear"] != DBNull.Value ? reader["PublishedYear"].ToString() : null,
-                                    BorrowedBooks = new List<BorrowedBooks>()
-                                };
+                                book = GetBookData(reader);
+                                book.BorrowedBooks = new List<BorrowedBooks>();   
                             }
 
                             book.BorrowedBooks.Add(new BorrowedBooks
@@ -187,7 +161,7 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
         }
 
         public IEnumerable<Book> GetBooksByAuthor(string authorName)
-        {           
+        {
             List<Book> books = new List<Book>();
 
             using (var connection = new SqlConnection(_connectionString))
@@ -203,14 +177,7 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                     {
                         while (reader.Read())
                         {
-                            Book book = new Book
-                            {
-                                Id = (int)reader["Id"],
-                                Title = reader["Title"] != DBNull.Value ? reader["Title"].ToString() : null,
-                                Author = reader["Author"] != DBNull.Value ? reader["Author"].ToString() : null,
-                                Genre = reader["Genre"] != DBNull.Value ? reader["Genre"].ToString() : null,
-                                PublishedYear = reader["PublishedYear"] != DBNull.Value ? reader["PublishedYear"].ToString() : null,
-                            };
+                            Book book = GetBookData(reader);
 
                             books.Add(book);
                         }
@@ -238,14 +205,7 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                     {
                         while (reader.Read())
                         {
-                            Book book = new Book
-                            {
-                                Id = (int)reader["Id"],
-                                Title = reader["Title"] != DBNull.Value ? reader["Title"].ToString() : null,
-                                Author = reader["Author"] != DBNull.Value ? reader["Author"].ToString() : null,
-                                Genre = reader["Genre"] != DBNull.Value ? reader["Genre"].ToString() : null,
-                                PublishedYear = reader["PublishedYear"] != DBNull.Value ? reader["PublishedYear"].ToString() : null,
-                            };
+                            Book book = GetBookData(reader);
 
                             books.Add(book);
                         }
@@ -312,14 +272,7 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                     {
                         while (reader.Read())
                         {
-                            Book book = new Book
-                            {
-                                Id = (int)reader["Id"],
-                                Title = reader["Title"] != DBNull.Value ? reader["Title"].ToString() : null,
-                                Author = reader["Author"] != DBNull.Value ? reader["Author"].ToString() : null,
-                                Genre = reader["Genre"] != DBNull.Value ? reader["Genre"].ToString() : null,
-                                PublishedYear = reader["PublishedYear"] != DBNull.Value ? reader["PublishedYear"].ToString() : null,
-                            };
+                            Book book = GetBookData(reader);
 
                             books.Add(book);
                         }
@@ -346,14 +299,7 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                     {
                         while (reader.Read())
                         {
-                            Book book = new Book
-                            {
-                                Id = (int)reader["Id"],
-                                Title = reader["Title"] != DBNull.Value ? reader["Title"].ToString() : null,
-                                Author = reader["Author"] != DBNull.Value ? reader["Author"].ToString() : null,
-                                Genre = reader["Genre"] != DBNull.Value ? reader["Genre"].ToString() : null,
-                                PublishedYear = reader["PublishedYear"] != DBNull.Value ? reader["PublishedYear"].ToString() : null,
-                            };
+                            Book book = GetBookData(reader);
 
                             books.Add(book);
                         }
@@ -362,6 +308,19 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
             }
 
             return books;
+        }
+
+
+        private Book GetBookData(SqlDataReader reader)
+        {
+            return new Book
+            {
+                Id = (int)reader["Id"],
+                Title = reader["Title"] != DBNull.Value ? reader["Title"].ToString() : null,
+                Author = reader["Author"] != DBNull.Value ? reader["Author"].ToString() : null,
+                Genre = reader["Genre"] != DBNull.Value ? reader["Genre"].ToString() : null,
+                PublishedYear = reader["PublishedYear"] != DBNull.Value ? reader["PublishedYear"].ToString() : null,
+            };
         }
     }
 }
