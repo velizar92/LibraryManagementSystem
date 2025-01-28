@@ -10,7 +10,7 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
             _connectionString = connectionString;
         }
 
-        public void BorrowBook(int bookId, int memberId, DateTime? borrowDate)
+        public void BorrowBook(int bookId, int memberId, DateTime borrowDate)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -28,7 +28,7 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
         }
 
        
-        public void ReturnBook(int borrowId, DateTime? returnDate)
+        public void ReturnBook(int borrowId, DateTime returnDate)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
