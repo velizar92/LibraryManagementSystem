@@ -9,5 +9,5 @@
 	FOREIGN KEY([BookId]) REFERENCES Books([Id]),
 	[MemberId] INT,
 	FOREIGN KEY([MemberId]) REFERENCES Members([Id]),
-	
+	CONSTRAINT UC_BookId_ReturnDate UNIQUE (BookId, ReturnDate)
 )
