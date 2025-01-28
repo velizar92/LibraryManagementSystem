@@ -27,7 +27,7 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
             }
         }
 
-       
+
         public void ReturnBook(int borrowId, DateTime returnDate)
         {
             using (var connection = new SqlConnection(_connectionString))
@@ -41,6 +41,23 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                   
                     connection.Open();
                     command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public bool IsBookBorrowed(int bookId)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                using (var command = new SqlCommand("SELECT COUNT(*) FROM BorrowedBooks " +
+                                                    "WHERE Id = @BookId AND ReturnDate IS NULL", connection))
+                {
+                    command.Parameters.AddWithValue("@BookId", bookId);
+                  
+
+                    connection.Open();
+                    int count = (int)command.ExecuteScalar();
+                    return count > 0;
                 }
             }
         }
