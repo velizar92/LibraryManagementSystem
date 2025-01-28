@@ -43,8 +43,7 @@ namespace LibraryManagementSystem.ServicesLibrary.Services
                 throw new ArgumentException("The borrow date cannot be in the future.", nameof(borrowDate));
             }
 
-
-            bool isBookBorrowed = _borrowedBookRepository.IsBookBorrowed(bookId);
+            bool isBookBorrowed = IsBookBorrowed(bookId);
             
             if (isBookBorrowed == true)
             {
@@ -54,14 +53,47 @@ namespace LibraryManagementSystem.ServicesLibrary.Services
             _borrowedBookRepository.BorrowBook(bookId, memberId, borrowDate);
         }
 
+
         public void ReturnBook(int borrowId, DateTime returnDate)
         {
             if (borrowId < 0)
             {
-                throw new ArgumentException($"The id is negative.", nameof(borrowId));
+                throw new ArgumentException($"The borrow id is negative.", nameof(borrowId));
+            }
+
+            if (returnDate > DateTime.Now)
+            {
+                throw new ArgumentException("The return date cannot be in the future.", nameof(returnDate));
+            }
+
+            int bookId = GetBookIdByBorrowId(borrowId);
+
+            if (IsBookBorrowed(bookId) == false)
+            {
+                throw new InvalidOperationException("The book is already returned.");
             }
 
             _borrowedBookRepository.ReturnBook(borrowId, returnDate);
+        }
+
+        public bool IsBookBorrowed(int bookId)
+        {
+            if (bookId < 0)
+            {
+                throw new ArgumentException($"The book id is negative.", nameof(bookId));
+            }
+
+            return _borrowedBookRepository.IsBookBorrowed(bookId);
+        }
+
+        public int GetBookIdByBorrowId(int borrowId)
+        {
+            if (borrowId < 0)
+            {
+                throw new ArgumentException($"The borrow id is negative.", nameof(borrowId));
+            }
+
+            return _borrowedBookRepository.GetBookIdByBorrowId(borrowId);
         }
     }
 }
