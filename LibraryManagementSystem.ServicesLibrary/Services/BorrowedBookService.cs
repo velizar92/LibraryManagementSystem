@@ -4,9 +4,9 @@ namespace LibraryManagementSystem.ServicesLibrary.Services
 {
     public class BorrowedBookService : IBorrowedBookService
     {
-        private IBorrowedBookRepository _borrowedBookRepository;
-        private IBookRepository _bookRepository;
-        private IMemberRepository _memberRepository;
+        private readonly IBorrowedBookRepository _borrowedBookRepository;
+        private readonly IBookRepository _bookRepository;
+        private readonly IMemberRepository _memberRepository;
 
         public BorrowedBookService(IBorrowedBookRepository borrowedBookRepository,
             IBookRepository bookRepository, IMemberRepository memberRepository)
