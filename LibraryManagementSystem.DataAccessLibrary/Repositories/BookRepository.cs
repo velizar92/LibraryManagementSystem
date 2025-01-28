@@ -271,7 +271,7 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                 using (var command = new SqlCommand("SELECT * FROM Books AS b " +
                                                     "JOIN BorrowedBooks AS bb ON bb.BookId = b.Id " +
                                                     "JOIN Members AS m ON bb.MemberId = m.Id " +
-                                                    "WHERE IsDeleted = @IsDeleted AND bb.BorrowedDate IS NOT NULL AND m.Id = @MemberId", connection))
+                                                    "WHERE m.Id = @MemberId AND IsDeleted = @IsDeleted AND bb.BorrowedDate IS NOT NULL", connection))
                 {
                     command.Parameters.AddWithValue("@MemberId", memberId);
                     command.Parameters.AddWithValue("@IsDeleted", 0);
