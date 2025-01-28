@@ -86,9 +86,9 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
             return book;
         }
 
-        public Book GetBookByTitle(string bookTitle)
+        public IEnumerable<Book> GetBooksByTitle(string bookTitle)
         {
-            Book book = null;
+            List<Book> books = new List<Book>();
 
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -103,13 +103,14 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                     {
                         while (reader.Read())
                         {
-                            book = GetBookData(reader);
+                            var book = GetBookData(reader);
+                            books.Add(book);
                         }
                     }
                 }
             }
 
-            return book;
+            return books;
         }
 
         public Book GetBookFullInfoById(int bookId)
