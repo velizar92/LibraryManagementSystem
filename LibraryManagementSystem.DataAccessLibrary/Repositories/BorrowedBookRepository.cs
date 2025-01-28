@@ -14,13 +14,14 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
         {
             using (var connection = new SqlConnection(_connectionString))
             {
-                using (var command = new SqlCommand("INSERT INTO BorrowedBooks(BookId, MemberId, BorrowDate, IsDeleted) " +
-                                                    "VALUES(@BookId, @MemberId, @BorrowDate, @IsDeleted)", connection))
+                using (var command = new SqlCommand("INSERT INTO BorrowedBooks(BookId, MemberId, BorrowDate, IsDeleted, ReturnDate) " +
+                                                    "VALUES(@BookId, @MemberId, @BorrowDate, @IsDeleted, @ReturnDate)", connection))
                 {
                     command.Parameters.AddWithValue("@BookId", bookId);
                     command.Parameters.AddWithValue("@MemberId", memberId);
                     command.Parameters.AddWithValue("@BorrowDate", borrowDate);
                     command.Parameters.AddWithValue("@IsDeleted", 0);
+                    command.Parameters.AddWithValue("@ReturnDate", null);
 
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -53,7 +54,8 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
             using (var connection = new SqlConnection(_connectionString))
             {
                 using (var command = new SqlCommand("SELECT COUNT(*) FROM BorrowedBooks " +
-                                                    "WHERE BookId = @BookId AND ReturnDate IS NULL AND                                                           IsDeleted = @IsDeleted", connection))
+                                                    "WHERE BookId = @BookId AND ReturnDate IS NULL " +
+                                                    "AND IsDeleted = @IsDeleted", connection))
                 {
                     command.Parameters.AddWithValue("@BookId", bookId);
                     command.Parameters.AddWithValue("@IsDeleted", 0);
