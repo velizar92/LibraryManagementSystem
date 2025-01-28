@@ -5,6 +5,7 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
     public class BorrowedBookRepository : IBorrowedBookRepository
     {
         private readonly string _connectionString;
+
         public BorrowedBookRepository(string connectionString)
         {
             _connectionString = connectionString;
@@ -60,7 +61,6 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                     command.Parameters.AddWithValue("@BookId", bookId);
                     command.Parameters.AddWithValue("@IsDeleted", 0);
                   
-
                     connection.Open();
                     int count = (int)command.ExecuteScalar();
                     return count > 0;
