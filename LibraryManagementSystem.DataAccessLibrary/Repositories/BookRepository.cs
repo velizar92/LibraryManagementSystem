@@ -41,8 +41,10 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
             using (var connection = new SqlConnection(_connectionString))
             {
                 using (var command = new SqlCommand("SELECT * FROM Books " +
-                                                    "WHERE IsDeleted = 0", connection))
+                                                    "WHERE IsDeleted = @IsDeleted", connection))
                 {
+                    command.Parameters.AddWithValue("@IsDeleted", 0);
+
                     connection.Open();
 
                     using (var reader = command.ExecuteReader())
@@ -67,9 +69,10 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
             using (var connection = new SqlConnection(_connectionString))
             {
                 using (var command = new SqlCommand("SELECT * FROM Books " +
-                                                    "WHERE Id = @BookId AND IsDeleted = 0", connection))
+                                                    "WHERE Id = @BookId AND IsDeleted = @IsDeleted", connection))
                 {
                     command.Parameters.AddWithValue("@BookId", bookId);
+                    command.Parameters.AddWithValue("@IsDeleted", 0);
 
                     connection.Open();
 
@@ -93,9 +96,10 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
             using (var connection = new SqlConnection(_connectionString))
             {
                 using (var command = new SqlCommand("SELECT * FROM Books " +
-                                                    "WHERE Title = @BookTitle AND IsDeleted = 0", connection))
+                                                    "WHERE Title = @BookTitle AND IsDeleted = @IsDeleted", connection))
                 {
                     command.Parameters.AddWithValue("@BookTitle", bookTitle);
+                    command.Parameters.AddWithValue("@IsDeleted", 0);
 
                     connection.Open();
 
@@ -124,9 +128,10 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                                                     "FROM Books AS b " +
                                                     "JOIN BorrowedBooks AS bb ON bb.BookId = b.Id " +
                                                     "JOIN Members AS m ON bb.MemberId = m.Id " +
-                                                    "WHERE b.Id = @BookId AND b.IsDeleted = 0", connection))
+                                                    "WHERE b.Id = @BookId AND b.IsDeleted = @IsDeleted", connection))
                 {
                     command.Parameters.AddWithValue("@BookId", bookId);
+                    command.Parameters.AddWithValue("@IsDeleted", 0);
 
                     connection.Open();
 
@@ -168,9 +173,10 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
             using (var connection = new SqlConnection(_connectionString))
             {
                 using (var command = new SqlCommand("SELECT * FROM Books " +
-                                                    "WHERE Author = @Author AND IsDeleted = 0", connection))
+                                                    "WHERE Author = @Author AND IsDeleted = @IsDeleted", connection))
                 {
                     command.Parameters.AddWithValue("@Author", authorName);
+                    command.Parameters.AddWithValue("@IsDeleted", 0);
 
                     connection.Open();
 
@@ -196,9 +202,10 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
             using (var connection = new SqlConnection(_connectionString))
             {
                 using (var command = new SqlCommand("SELECT * FROM Books " +
-                                                    "WHERE Genre = @Genre AND IsDeleted = 0", connection))
+                                                    "WHERE Genre = @Genre AND IsDeleted = @IsDeleted", connection))
                 {
                     command.Parameters.AddWithValue("@Genre", genreName);
+                    command.Parameters.AddWithValue("@IsDeleted", 0);
 
                     connection.Open();
 
@@ -242,12 +249,13 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
             using (var connection = new SqlConnection(_connectionString))
             {
                 using (var command = new SqlCommand("UPDATE Books " +
-                                                    "SET IsDeleted = 1, DeletedOn = @DeletedOn " +
+                                                    "SET IsDeleted = @IsDeleted, DeletedOn = @DeletedOn " +
                                                     "WHERE Id = @BookId", connection))
                 {
                     command.Parameters.AddWithValue("@BookId", bookId);
+                    command.Parameters.AddWithValue("@IsDeleted", 1);
                     command.Parameters.AddWithValue("@DeletedOn", DateTime.UtcNow);
-
+                    
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -263,9 +271,10 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                 using (var command = new SqlCommand("SELECT * FROM Books AS b " +
                                                     "JOIN BorrowedBooks AS bb ON bb.BookId = b.Id " +
                                                     "JOIN Members AS m ON bb.MemberId = m.Id " +
-                                                    "WHERE IsDeleted = 0 AND bb.BorrowedDate IS NOT NULL AND m.Id = @MemberId", connection))
+                                                    "WHERE IsDeleted = @IsDeleted AND bb.BorrowedDate IS NOT NULL AND m.Id = @MemberId", connection))
                 {
                     command.Parameters.AddWithValue("@MemberId", memberId);
+                    command.Parameters.AddWithValue("@IsDeleted", 0);
 
                     connection.Open();
 
@@ -292,8 +301,10 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
             {
                 using (var command = new SqlCommand("SELECT * FROM Books AS b " +
                                                     "JOIN BorrowedBooks AS bb ON bb.BookId = b.Id " +
-                                                    "WHERE IsDeleted = 0 AND bb.BorrowedDate IS NOT NULL", connection))
+                                                    "WHERE IsDeleted = @IsDeleted AND bb.BorrowedDate IS NOT NULL", connection))
                 {
+                    command.Parameters.AddWithValue("@IsDeleted", 0);
+
                     connection.Open();
 
                     using (var reader = command.ExecuteReader())
