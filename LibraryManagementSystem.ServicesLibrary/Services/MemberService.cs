@@ -53,6 +53,11 @@ namespace LibraryManagementSystem.ServicesLibrary.Services
                 throw new ArgumentException("Member Id cannot be negative!", nameof(memberId));
             }
 
+            if (_memberRepository.GetMemberById(memberId) == null)
+            {
+                throw new InvalidOperationException($"Member with this id {memberId} does not exist!");
+            }
+
             return _memberRepository.GetMemberById(memberId);
         }
 
@@ -62,6 +67,12 @@ namespace LibraryManagementSystem.ServicesLibrary.Services
             {
                 throw new ArgumentException("Member Id cannot be negative!", nameof(memberId));
             }
+
+            if (_memberRepository.GetMemberById(memberId) == null)
+            {
+                throw new InvalidOperationException($"Member with this id {memberId} does not exist!");
+            }
+
 
             return _memberRepository.GetMemberFullInfoById(memberId);
         }
