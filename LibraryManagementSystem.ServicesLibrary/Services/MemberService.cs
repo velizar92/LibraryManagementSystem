@@ -5,15 +5,11 @@ namespace LibraryManagementSystem.ServicesLibrary.Services
 {
     public class MemberService : IMemberService
     {
-        private readonly IBorrowedBookRepository _borrowedBookRepository;
-        private readonly IBookRepository _bookRepository;
         private readonly IMemberRepository _memberRepository;
 
         public MemberService(IBorrowedBookRepository borrowedBookRepository,
             IBookRepository bookRepository, IMemberRepository memberRepository)
         {
-            _borrowedBookRepository = borrowedBookRepository;
-            _bookRepository = bookRepository;
             _memberRepository = memberRepository;
         }
 
