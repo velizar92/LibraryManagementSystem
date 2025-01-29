@@ -7,8 +7,7 @@ namespace LibraryManagementSystem.ServicesLibrary.Services
     {
         private readonly IMemberRepository _memberRepository;
 
-        public MemberService(IBorrowedBookRepository borrowedBookRepository,
-            IBookRepository bookRepository, IMemberRepository memberRepository)
+        public MemberService(IMemberRepository memberRepository)
         {
             _memberRepository = memberRepository;
         }
