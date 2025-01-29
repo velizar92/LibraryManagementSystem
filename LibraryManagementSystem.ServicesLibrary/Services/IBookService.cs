@@ -6,8 +6,8 @@ namespace LibraryManagementSystem.ServicesLibrary.Services
     {
         void AddBook(Book book);
         Book GetBookById(int bookId);
-        Book GetBookByTitle(string bookTitle);
         Book GetBookFullInfoById(int bookId);
+        IEnumerable<Book> GetBooksByTitle(string bookTitle);
         IEnumerable<Book> GetBooksByAuthor(string authorName);
         IEnumerable<Book> GetBooksByGenre(string genreName);
         IEnumerable<Book> GetAllBooks();
