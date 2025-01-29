@@ -8,4 +8,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LibraryManagementSystem.DataAccessLibrary\LibraryManagementSystem.DataAccessLibrary.csproj" />
+    <ProjectReference Include="..\LibraryManagementSystem.ModelsLibrary\LibraryManagementSystem.ModelsLibrary.csproj" />
+    <ProjectReference Include="..\LibraryManagementSystem.ServicesLibrary\LibraryManagementSystem.ServicesLibrary.csproj" />
+  </ItemGroup>
+
 </Project>
