@@ -42,6 +42,7 @@
             // 
             // txtFirstName
             // 
+            txtFirstName.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtFirstName.Location = new Point(25, 150);
             txtFirstName.Multiline = true;
             txtFirstName.Name = "txtFirstName";
@@ -61,6 +62,7 @@
             // 
             // txtLastName
             // 
+            txtLastName.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtLastName.Location = new Point(25, 260);
             txtLastName.Multiline = true;
             txtLastName.Name = "txtLastName";
@@ -69,6 +71,7 @@
             // 
             // txtEmail
             // 
+            txtEmail.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtEmail.Location = new Point(25, 367);
             txtEmail.Multiline = true;
             txtEmail.Name = "txtEmail";
@@ -77,6 +80,7 @@
             // 
             // txtPhoneNumber
             // 
+            txtPhoneNumber.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtPhoneNumber.Location = new Point(25, 478);
             txtPhoneNumber.Multiline = true;
             txtPhoneNumber.Name = "txtPhoneNumber";
@@ -151,7 +155,6 @@
             Controls.Add(txtFirstName);
             Name = "AddMemberForm";
             Text = "AddMemberForm";
-            Load += AddMemberForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }

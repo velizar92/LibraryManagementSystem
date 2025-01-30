@@ -63,6 +63,7 @@
             // 
             // txtTitle
             // 
+            txtTitle.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtTitle.Location = new Point(24, 162);
             txtTitle.Multiline = true;
             txtTitle.Name = "txtTitle";
@@ -81,6 +82,7 @@
             // 
             // txtAuthor
             // 
+            txtAuthor.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtAuthor.Location = new Point(24, 276);
             txtAuthor.Multiline = true;
             txtAuthor.Name = "txtAuthor";
@@ -99,6 +101,7 @@
             // 
             // txtGenre
             // 
+            txtGenre.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtGenre.Location = new Point(24, 391);
             txtGenre.Multiline = true;
             txtGenre.Name = "txtGenre";
@@ -117,6 +120,7 @@
             // 
             // txtPublishedYear
             // 
+            txtPublishedYear.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtPublishedYear.Location = new Point(24, 508);
             txtPublishedYear.Multiline = true;
             txtPublishedYear.Name = "txtPublishedYear";
