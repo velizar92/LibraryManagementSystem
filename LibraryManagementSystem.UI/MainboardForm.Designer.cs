@@ -31,13 +31,16 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             label1 = new Label();
             dgvMembers = new DataGridView();
-            dgvBooks = new DataGridView();
             lblMembers = new Label();
             label2 = new Label();
             btnAddBook = new Button();
             btnAddMember = new Button();
+            dgvBooks = new DataGridView();
             ((System.ComponentModel.ISupportInitialize)dgvMembers).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvBooks).BeginInit();
             SuspendLayout();
@@ -82,15 +85,6 @@
             dgvMembers.Size = new Size(1169, 283);
             dgvMembers.TabIndex = 1;
             // 
-            // dgvBooks
-            // 
-            dgvBooks.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvBooks.Location = new Point(52, 551);
-            dgvBooks.Name = "dgvBooks";
-            dgvBooks.RowHeadersWidth = 51;
-            dgvBooks.Size = new Size(1169, 283);
-            dgvBooks.TabIndex = 2;
-            // 
             // lblMembers
             // 
             lblMembers.AutoSize = true;
@@ -133,16 +127,45 @@
             btnAddMember.UseVisualStyleBackColor = true;
             btnAddMember.Click += btnAddMember_Click;
             // 
+            // dgvBooks
+            // 
+            dgvBooks.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvBooks.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Control;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            dgvBooks.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dgvBooks.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvBooks.Location = new Point(52, 542);
+            dgvBooks.Name = "dgvBooks";
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = SystemColors.Control;
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            dgvBooks.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dgvBooks.RowHeadersWidth = 51;
+            dataGridViewCellStyle6.Font = new Font("Microsoft Sans Serif", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dgvBooks.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dgvBooks.Size = new Size(1169, 283);
+            dgvBooks.TabIndex = 7;
+            // 
             // MainboardForm
             // 
             AutoScaleDimensions = new SizeF(26F, 62F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1279, 907);
+            Controls.Add(dgvBooks);
             Controls.Add(btnAddMember);
             Controls.Add(btnAddBook);
             Controls.Add(label2);
             Controls.Add(lblMembers);
-            Controls.Add(dgvBooks);
             Controls.Add(dgvMembers);
             Controls.Add(label1);
             Font = new Font("Segoe UI", 28.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -160,10 +183,10 @@
 
         private Label label1;
         private DataGridView dgvMembers;
-        private DataGridView dgvBooks;
         private Label lblMembers;
         private Label label2;
         private Button btnAddBook;
         private Button btnAddMember;
+        private DataGridView dgvBooks;
     }
 }
