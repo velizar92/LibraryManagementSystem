@@ -1,7 +1,7 @@
 using LibraryManagementSystem.DataAccessLibrary.Repositories;
 using LibraryManagementSystem.ServicesLibrary.Services;
 
-namespace LibraryManagementSystem.UI
+namespace LibraryManagementSystem.UI.Forms
 {
     public partial class MainboardForm : Form
     {

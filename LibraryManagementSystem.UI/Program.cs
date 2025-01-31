@@ -1,3 +1,5 @@
+using LibraryManagementSystem.UI.Forms;
+
 namespace LibraryManagementSystem.UI
 {
     internal static class Program

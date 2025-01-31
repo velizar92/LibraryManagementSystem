@@ -1,4 +1,4 @@
-﻿namespace LibraryManagementSystem.UI
+﻿namespace LibraryManagementSystem.UI.Forms
 {
     partial class AddMemberForm
     {

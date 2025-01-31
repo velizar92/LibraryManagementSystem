@@ -2,7 +2,7 @@
 using LibraryManagementSystem.ModelsLibrary;
 using LibraryManagementSystem.ServicesLibrary.Services;
 
-namespace LibraryManagementSystem.UI
+namespace LibraryManagementSystem.UI.Forms
 {
     public partial class AddBookForm : Form
     {
