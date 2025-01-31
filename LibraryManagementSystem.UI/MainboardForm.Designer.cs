@@ -155,12 +155,13 @@
             dgvBooks.RowsDefaultCellStyle = dataGridViewCellStyle6;
             dgvBooks.Size = new Size(1169, 283);
             dgvBooks.TabIndex = 7;
+            dgvBooks.CellClick += dgvBooks_CellClick;
             // 
             // MainboardForm
             // 
             AutoScaleDimensions = new SizeF(26F, 62F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1279, 907);
+            ClientSize = new Size(1284, 907);
             Controls.Add(dgvBooks);
             Controls.Add(btnAddMember);
             Controls.Add(btnAddBook);
