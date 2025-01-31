@@ -32,24 +32,24 @@ namespace LibraryManagementSystem.UI
 
             foreach (var member in members)
             {
-                dgvMembers.Rows.Add(member.FirstName, member.LastName, member.Email, member.PhoneNumber);
+                dgvMembers.Rows.Add(member.Id, member.FirstName, member.LastName, member.Email, member.PhoneNumber);
             }
 
             foreach (var book in books)
             {
-                dgvBooks.Rows.Add(book.Title, book.Author, book.Genre, book.PublishedYear);
+                dgvBooks.Rows.Add(book.Id, book.Title, book.Author, book.Genre, book.PublishedYear);
             }
         }
 
         private void _addMemberForm_AddedMember(object? sender, MemberEventArgs e)
         {
-            dgvMembers.Rows.Add(e.Member.FirstName, e.Member.LastName, e.Member.Email,
+            dgvMembers.Rows.Add(e.Member.Id, e.Member.FirstName, e.Member.LastName, e.Member.Email,
                 e.Member.PhoneNumber);
         }
 
         private void _addBookForm_AddedBook(object? sender, BookEventArgs e)
         {
-            dgvBooks.Rows.Add(e.Book.Title, e.Book.Author, e.Book.Genre,
+            dgvBooks.Rows.Add(e.Book.Id, e.Book.Title, e.Book.Author, e.Book.Genre,
                e.Book.PublishedYear);
         }
 
@@ -77,6 +77,7 @@ namespace LibraryManagementSystem.UI
 
         private void InitializeMembersDataGridView()
         {
+            dgvMembers.Columns.Add("Id", "Id");
             dgvMembers.Columns.Add("FirstName", "First Name");
             dgvMembers.Columns.Add("LastName", "Last Name");
             dgvMembers.Columns.Add("Email", "Email");
@@ -85,6 +86,7 @@ namespace LibraryManagementSystem.UI
 
         private void InitializeBooksDataGridView()
         {
+            dgvBooks.Columns.Add("Id", "Id");
             dgvBooks.Columns.Add("Title", "Title");
             dgvBooks.Columns.Add("Author", "Author");
             dgvBooks.Columns.Add("Genre", "Genre");
