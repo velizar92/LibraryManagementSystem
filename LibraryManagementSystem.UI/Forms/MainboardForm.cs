@@ -181,6 +181,20 @@ namespace LibraryManagementSystem.UI.Forms
                 _updateBookForm.Genre = genre;
                 _updateBookForm.PublishedYear = publishedYear;
 
+                if (_updateBookForm == null || _updateBookForm.IsDisposed)
+                {
+                    _updateBookForm = new UpdateBookForm()
+                    {
+                        Id = id,
+                        Title = title,
+                        Author = author,
+                        Genre = genre,
+                        PublishedYear = publishedYear
+                    };
+
+                    _updateBookForm.UpdatedBook += _updateBookForm_UpdatedBook;
+                }
+
                 _updateBookForm.Show();
             }
         }
@@ -203,6 +217,20 @@ namespace LibraryManagementSystem.UI.Forms
                 _updateMemberForm.LastName = lastName;
                 _updateMemberForm.Email = email;
                 _updateMemberForm.PhoneNumber = phoneNumber;
+
+                if (_updateMemberForm == null || _updateMemberForm.IsDisposed)
+                {
+                    _updateMemberForm = new UpdateMemberForm()
+                    {
+                        Id = id,
+                        FirstName = firstName,
+                        LastName = lastName,
+                        Email = email,
+                        PhoneNumber = phoneNumber
+                    };
+
+                    _updateMemberForm.UpdatedMember += _updateMemberForm_UpdatedMember;
+                }
 
                 _updateMemberForm.Show();
             }
