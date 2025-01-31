@@ -84,6 +84,7 @@
             dgvMembers.RowsDefaultCellStyle = dataGridViewCellStyle3;
             dgvMembers.Size = new Size(1169, 283);
             dgvMembers.TabIndex = 1;
+            dgvMembers.CellDoubleClick += dgvMembers_CellDoubleClick;
             // 
             // lblMembers
             // 
@@ -155,7 +156,7 @@
             dgvBooks.RowsDefaultCellStyle = dataGridViewCellStyle6;
             dgvBooks.Size = new Size(1169, 283);
             dgvBooks.TabIndex = 7;
-            dgvBooks.CellClick += dgvBooks_CellClick;
+            dgvBooks.CellDoubleClick += dgvBooks_CellDoubleClick;
             // 
             // MainboardForm
             // 

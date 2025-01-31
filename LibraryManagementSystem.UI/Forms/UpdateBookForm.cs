@@ -62,6 +62,8 @@ namespace LibraryManagementSystem.UI.Forms
             _bookService.UpdateBook(book);
 
             UpdatedBook?.Invoke(this, new BookEventArgs(book));
+
+            Close();
         }
     }
 }

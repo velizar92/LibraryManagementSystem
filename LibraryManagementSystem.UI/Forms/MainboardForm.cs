@@ -8,6 +8,7 @@ namespace LibraryManagementSystem.UI.Forms
         private AddMemberForm _addMemberForm;
         private AddBookForm _addBookForm;
         private UpdateBookForm _updateBookForm;
+        private UpdateMemberForm _updateMemberForm;
         private readonly MemberService _memberService;
         private readonly BookService _bookService;
         private readonly BorrowedBookService _borrowedBookService;
@@ -31,6 +32,9 @@ namespace LibraryManagementSystem.UI.Forms
 
             _updateBookForm = new UpdateBookForm();
             _updateBookForm.UpdatedBook += _updateBookForm_UpdatedBook;
+
+            _updateMemberForm = new UpdateMemberForm();
+            _updateMemberForm.UpdatedMember += _updateMemberForm_UpdatedMember;
         }
 
 
@@ -74,13 +78,29 @@ namespace LibraryManagementSystem.UI.Forms
                 if (row.Cells["Id"].Value != null && row.Cells["Id"].Value.ToString() == e.Book.Id.ToString())
                 {
                     dgvBooks.Rows.Remove(row);
-                    break; 
+                    break;
                 }
             }
 
             dgvBooks.Rows.Add(e.Book.Id, e.Book.Title, e.Book.Author, e.Book.Genre,
                 e.Book.PublishedYear);
         }
+
+        private void _updateMemberForm_UpdatedMember(object? sender, MemberEventArgs e)
+        {
+            foreach (DataGridViewRow row in dgvMembers.Rows)
+            {
+                if (row.Cells["Id"].Value != null && row.Cells["Id"].Value.ToString() == e.Member.Id.ToString())
+                {
+                    dgvMembers.Rows.Remove(row);
+                    break;
+                }
+            }
+
+            dgvMembers.Rows.Add(e.Member.Id, e.Member.FirstName, e.Member.LastName, e.Member.Email,
+                e.Member.PhoneNumber);
+        }
+
 
         private void btnAddMember_Click(object sender, EventArgs e)
         {
@@ -141,7 +161,8 @@ namespace LibraryManagementSystem.UI.Forms
             }
         }
 
-        private void dgvBooks_CellClick(object sender, DataGridViewCellEventArgs e)
+
+        private void dgvBooks_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
@@ -152,7 +173,7 @@ namespace LibraryManagementSystem.UI.Forms
                 string title = row.Cells["Title"].Value.ToString();
                 string author = row.Cells["Author"].Value.ToString();
                 string genre = row.Cells["Genre"].Value.ToString();
-                string publishedYear =row.Cells["PublishedYear"].Value.ToString();
+                string publishedYear = row.Cells["PublishedYear"].Value.ToString();
 
                 _updateBookForm.Id = id;
                 _updateBookForm.Title = title;
@@ -161,6 +182,29 @@ namespace LibraryManagementSystem.UI.Forms
                 _updateBookForm.PublishedYear = publishedYear;
 
                 _updateBookForm.Show();
+            }
+        }
+
+        private void dgvMembers_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dgvMembers.Rows[e.RowIndex];
+
+                // Extract data from the selected row
+                string id = row.Cells["Id"].Value.ToString();
+                string firstName = row.Cells["FirstName"].Value.ToString();
+                string lastName = row.Cells["LastName"].Value.ToString();
+                string email = row.Cells["Email"].Value.ToString();
+                string phoneNumber = row.Cells["PhoneNumber"].Value.ToString();
+
+                _updateMemberForm.Id = id;
+                _updateMemberForm.FirstName = firstName;
+                _updateMemberForm.LastName = lastName;
+                _updateMemberForm.Email = email;
+                _updateMemberForm.PhoneNumber = phoneNumber;
+
+                _updateMemberForm.Show();
             }
         }
     }
