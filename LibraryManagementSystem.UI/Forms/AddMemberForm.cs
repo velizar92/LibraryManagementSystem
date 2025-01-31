@@ -33,14 +33,4 @@ namespace LibraryManagementSystem.UI.Forms
             Close();
         }
     }
-
-    public class MemberEventArgs : EventArgs
-    {
-        public Member Member { get; }
-
-        public MemberEventArgs(Member member)
-        {
-            Member = member;
-        }
-    }
 }
