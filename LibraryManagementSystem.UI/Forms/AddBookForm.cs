@@ -15,7 +15,7 @@ namespace LibraryManagementSystem.UI.Forms
 
         private void btnAddBook_Click(object sender, EventArgs e)
         {
-            BookService bookService = new BookService(new BookRepository(ConnectionStrings.connectionString));
+            BookService bookService = new BookService(new BookRepository(ConnectionStrings.connectionString), new BorrowedBookRepository(ConnectionStrings.connectionString));
 
             Book book = new Book
             {
@@ -25,7 +25,8 @@ namespace LibraryManagementSystem.UI.Forms
                 PublishedYear = txtPublishedYear.Text,
             };
 
-            bookService.AddBook(book);
+            int bookId = bookService.AddBook(book);
+            book.Id = bookId;
 
             AddedBook?.Invoke(this, new BookEventArgs(book));
 
