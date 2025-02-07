@@ -6,13 +6,15 @@ namespace LibraryManagementSystem.ServicesLibrary.Services
     public class BookService : IBookService
     {
         private readonly IBookRepository _bookRepository;
+        private readonly IBorrowedBookRepository _borrowedBookRepository;
 
-        public BookService(IBookRepository bookRepository)
+        public BookService(IBookRepository bookRepository, IBorrowedBookRepository borrowedBookRepository)
         {
             _bookRepository = bookRepository;
+            _borrowedBookRepository = borrowedBookRepository;
         }
 
-        public void AddBook(Book book)
+        public int AddBook(Book book)
         {
             if (book == null)
             {
@@ -25,7 +27,9 @@ namespace LibraryManagementSystem.ServicesLibrary.Services
                 throw new ArgumentException("Title and Author must be provided!");
             }
 
-            _bookRepository.AddBook(book);
+            int bookId = _bookRepository.AddBook(book);
+
+            return bookId;
         }
 
         public IEnumerable<Book> GetAllBooks()
@@ -35,7 +39,7 @@ namespace LibraryManagementSystem.ServicesLibrary.Services
 
         public IEnumerable<Book> GetAllBorrowedBooks()
         {
-            return _bookRepository.GetAllBorrowedBooks();
+            return _borrowedBookRepository.GetAllBorrowedBooks();
         }
 
         public Book GetBookById(int bookId)
@@ -45,7 +49,7 @@ namespace LibraryManagementSystem.ServicesLibrary.Services
                 throw new ArgumentException("Book Id cannot be negative!", nameof(bookId));
             }
 
-            if(_bookRepository.GetBookById(bookId) == null)
+            if (_bookRepository.GetBookById(bookId) == null)
             {
                 throw new InvalidOperationException($"Book with this id {bookId} does not exist!");
             }
@@ -70,12 +74,12 @@ namespace LibraryManagementSystem.ServicesLibrary.Services
                 throw new ArgumentException("Book Id cannot be negative!", nameof(bookId));
             }
 
-            if (_bookRepository.GetBookFullInfoById(bookId) == null)
+            if (_borrowedBookRepository.GetBookFullInfoById(bookId) == null)
             {
                 throw new InvalidOperationException($"Book with this id {bookId} does not exist!");
             }
 
-            return _bookRepository.GetBookFullInfoById(bookId);
+            return _borrowedBookRepository.GetBookFullInfoById(bookId);
         }
 
         public IEnumerable<Book> GetBooksByAuthor(string authorName)
@@ -100,7 +104,7 @@ namespace LibraryManagementSystem.ServicesLibrary.Services
                 throw new ArgumentException("Member Id cannot be negative!", nameof(memberId));
             }
 
-            return _bookRepository.GetBorrowedBooksByMemberId(memberId);
+            return _borrowedBookRepository.GetBorrowedBooksByMemberId(memberId);
         }
 
         public void UpdateBook(Book book)

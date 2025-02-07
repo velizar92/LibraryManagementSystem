@@ -4,7 +4,7 @@ namespace LibraryManagementSystem.ServicesLibrary.Services
 {
     public interface IBookService
     {
-        void AddBook(Book book);
+        int AddBook(Book book);
         Book GetBookById(int bookId);
         Book GetBookFullInfoById(int bookId);
         IEnumerable<Book> GetBooksByTitle(string bookTitle);
