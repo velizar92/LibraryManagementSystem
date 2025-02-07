@@ -32,7 +32,6 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
             }
         }
 
-      
 
         public IEnumerable<Book> GetAllBooks()
         {
@@ -51,7 +50,7 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                     {
                         while (reader.Read())
                         {
-                            Book book = GetBookData(reader);
+                            Book book = DataReaderExtensions.GetBookData(reader);
 
                             books.Add(book);
                         }
@@ -80,7 +79,7 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                     {
                         while (reader.Read())
                         {
-                            book = GetBookData(reader);
+                            book = DataReaderExtensions.GetBookData(reader);
                         }
                     }
                 }
@@ -107,7 +106,7 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                     {
                         while (reader.Read())
                         {
-                            var book = GetBookData(reader);
+                            var book = DataReaderExtensions.GetBookData(reader);
                             books.Add(book);
                         }
                     }
@@ -117,54 +116,6 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
             return books;
         }
 
-        public Book GetBookFullInfoById(int bookId)
-        {
-            Book book = null;
-
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                using (var command = new SqlCommand("SELECT b.Id, b.Title, b.Author, b.Genre, b.PublishedYear, m.FirstName, m.LastName, " +
-                                                    "m.Email, m.PhoneNumber, bb.BorrowDate, bb.ReturnDate " +
-                                                    "FROM Books AS b " +
-                                                    "JOIN BorrowedBooks AS bb ON bb.BookId = b.Id " +
-                                                    "JOIN Members AS m ON bb.MemberId = m.Id " +
-                                                    "WHERE b.Id = @BookId AND b.IsDeleted = @IsDeleted", connection))
-                {
-                    command.Parameters.AddWithValue("@BookId", bookId);
-                    command.Parameters.AddWithValue("@IsDeleted", 0);
-
-                    connection.Open();
-
-                    using (var reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            if (book == null)
-                            {
-                                book = GetBookData(reader);
-                                book.BorrowedBooks = new List<BorrowedBooks>();   
-                            }
-
-                            book.BorrowedBooks.Add(new BorrowedBooks
-                            {
-                                BorrowDate = reader["BorrowDate"] != DBNull.Value ? (DateTime?)reader["BorrowDate"] : null,
-                                ReturnDate = reader["ReturnDate"] != DBNull.Value ? (DateTime?)reader["ReturnDate"] : null,
-                                Member = new Member
-                                {
-                                    FirstName = reader["FirstName"] != DBNull.Value ? reader["FirstName"].ToString() : null,
-                                    LastName = reader["LastName"] != DBNull.Value ? reader["LastName"].ToString() : null,
-                                    Email = reader["Email"] != DBNull.Value ? reader["Email"].ToString() : null,
-                                    PhoneNumber = reader["PhoneNumber"] != DBNull.Value ? reader["PhoneNumber"].ToString() : null,
-                                }
-                            });
-
-                        }
-                    }
-                }
-            }
-
-            return book;
-        }
 
         public IEnumerable<Book> GetBooksByAuthor(string authorName)
         {
@@ -184,7 +135,7 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                     {
                         while (reader.Read())
                         {
-                            Book book = GetBookData(reader);
+                            Book book = DataReaderExtensions.GetBookData(reader);
 
                             books.Add(book);
                         }
@@ -213,7 +164,7 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                     {
                         while (reader.Read())
                         {
-                            Book book = GetBookData(reader);
+                            Book book = DataReaderExtensions.GetBookData(reader);
 
                             books.Add(book);
                         }
@@ -255,84 +206,11 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                     command.Parameters.AddWithValue("@BookId", bookId);
                     command.Parameters.AddWithValue("@IsDeleted", 1);
                     command.Parameters.AddWithValue("@DeletedOn", DateTime.UtcNow);
-                    
+
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
             }
-        }
-
-        public IEnumerable<Book> GetBorrowedBooksByMemberId(int memberId)
-        {
-            List<Book> books = new List<Book>();
-
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                using (var command = new SqlCommand("SELECT * FROM Books AS b " +
-                                                    "JOIN BorrowedBooks AS bb ON bb.BookId = b.Id " +
-                                                    "JOIN Members AS m ON bb.MemberId = m.Id " +
-                                                    "WHERE m.Id = @MemberId AND IsDeleted = @IsDeleted AND bb.BorrowedDate IS NOT NULL", connection))
-                {
-                    command.Parameters.AddWithValue("@MemberId", memberId);
-                    command.Parameters.AddWithValue("@IsDeleted", 0);
-
-                    connection.Open();
-
-                    using (var reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            Book book = GetBookData(reader);
-
-                            books.Add(book);
-                        }
-                    }
-                }
-            }
-
-            return books;
-        }
-
-        public IEnumerable<Book> GetAllBorrowedBooks()
-        {
-            List<Book> books = new List<Book>();
-
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                using (var command = new SqlCommand("SELECT * FROM Books AS b " +
-                                                    "JOIN BorrowedBooks AS bb ON bb.BookId = b.Id " +
-                                                    "WHERE IsDeleted = @IsDeleted AND bb.BorrowedDate IS NOT NULL", connection))
-                {
-                    command.Parameters.AddWithValue("@IsDeleted", 0);
-
-                    connection.Open();
-
-                    using (var reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            Book book = GetBookData(reader);
-
-                            books.Add(book);
-                        }
-                    }
-                }
-            }
-
-            return books;
-        }
-
-
-        private Book GetBookData(SqlDataReader reader)
-        {
-            return new Book
-            {
-                Id = (int)reader["Id"],
-                Title = reader["Title"] != DBNull.Value ? reader["Title"].ToString() : null,
-                Author = reader["Author"] != DBNull.Value ? reader["Author"].ToString() : null,
-                Genre = reader["Genre"] != DBNull.Value ? reader["Genre"].ToString() : null,
-                PublishedYear = reader["PublishedYear"] != DBNull.Value ? reader["PublishedYear"].ToString() : null,
-            };
         }
     }
 }
