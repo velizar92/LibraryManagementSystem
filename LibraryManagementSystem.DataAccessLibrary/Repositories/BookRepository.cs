@@ -13,12 +13,14 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
         }
 
 
-        public void AddBook(Book book)
+        public int AddBook(Book book)
         {
+            int bookId = 0;
+
             using (var connection = new SqlConnection(_connectionString))
             {
                 using (var command = new SqlCommand("INSERT INTO Books(Title, Author, Genre, PublishedYear, IsDeleted) " +
-                                                    "VALUES(@Title, @Author, @Genre, @PublishedYear, @IsDeleted)", connection))
+                                                    "OUTPUT INSERTED.Id VALUES(@Title, @Author, @Genre, @PublishedYear, @IsDeleted)", connection))
                 {
                     command.Parameters.AddWithValue("@Title", book.Title);
                     command.Parameters.AddWithValue("@Author", book.Author);
@@ -27,9 +29,11 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
                     command.Parameters.AddWithValue("@IsDeleted", 0);
 
                     connection.Open();
-                    command.ExecuteNonQuery();
+                    bookId = (int)command.ExecuteScalar();
                 }
             }
+
+            return bookId;
         }
 
 

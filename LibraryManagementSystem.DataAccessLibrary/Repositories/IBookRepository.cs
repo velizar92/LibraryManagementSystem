@@ -4,7 +4,7 @@ namespace LibraryManagementSystem.DataAccessLibrary.Repositories
 {
     public interface IBookRepository
     {
-        void AddBook(Book book);
+        int AddBook(Book book);
         Book GetBookById(int bookId);
         IEnumerable<Book> GetBooksByTitle(string bookTitle);
         IEnumerable<Book> GetBooksByAuthor(string authorName);
