@@ -19,7 +19,7 @@ namespace LibraryManagementSystem.UI.Forms
 
             _memberService = new MemberService(new MemberRepository(ConnectionStrings.connectionString));
 
-            _bookService = new BookService(new BookRepository(ConnectionStrings.connectionString));
+            _bookService = new BookService(new BookRepository(ConnectionStrings.connectionString), new BorrowedBookRepository(ConnectionStrings.connectionString));
 
             _borrowedBookService = new BorrowedBookService(new BorrowedBookRepository(ConnectionStrings.connectionString),
                 new BookRepository(ConnectionStrings.connectionString), new MemberRepository(ConnectionStrings.connectionString));

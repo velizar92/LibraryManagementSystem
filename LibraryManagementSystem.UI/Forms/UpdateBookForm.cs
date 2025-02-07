@@ -14,7 +14,7 @@ namespace LibraryManagementSystem.UI.Forms
         {
             InitializeComponent();
 
-            _bookService = new BookService(new BookRepository(ConnectionStrings.connectionString));
+            _bookService = new BookService(new BookRepository(ConnectionStrings.connectionString), new BorrowedBookRepository(ConnectionStrings.connectionString));
         }
 
         public string Id
